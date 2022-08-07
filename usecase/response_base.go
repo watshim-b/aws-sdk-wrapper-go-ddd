@@ -1,4 +1,4 @@
-package handler
+package usecase
 
 // レスポンスの基底クラス
 type ResponseBase struct {

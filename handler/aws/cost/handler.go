@@ -4,11 +4,12 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	usecase "github.com/watshim-b/aws-sdk-wrapper-go-ddd/usecase/aws/cost"
 )
 
-func ping(c *gin.Context) {
+func GetCostList(c *gin.Context) {
 	// リクエストされた情報をform煮詰める
-	acf := AWSCostForm{}
+	acf := usecase.AWSCostForm{}
 	err := c.ShouldBindQuery(&acf)
 	if err != nil {
 		println(err.Error())
@@ -17,8 +18,8 @@ func ping(c *gin.Context) {
 	}
 
 	// usecaseの処理を投げる
-	u := uc.NewCostUsecase()
-	lbs, err := u.GetCostAndUsage(acf)
+	cgu := usecase.CostGetUsecase{}
+	acs, err := cgu.GetCostList(acf)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"err": err.Error(),
@@ -28,6 +29,6 @@ func ping(c *gin.Context) {
 
 	// レスポンスを返却する
 	c.JSON(http.StatusOK, gin.H{
-		"lfs": lbs,
+		"data": acs,
 	})
 }

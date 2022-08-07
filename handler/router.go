@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	aws_cost_handler "github.com/watshim-b/aws-sdk-wrapper-go-ddd/handler/aws/cost"
 )
 
 // ルーティング
@@ -47,10 +48,9 @@ func (r *router) SetRouting() {
 
 	// テスト用のピング
 	r.e.GET("ping", ping)
-	// r.GET("login", Login)
-	// r.GET("user", GetUser)
-	// r.GET("lambda", GetFunction)
-	// r.GET("lambda/list", ListFunction)
-	// r.GET("s3/list/bucket", ListBuckets)
-	// r.GET("costexplorer/usage", GetCostAndUsage)
+	r.e.GET("/aws/cost/list", aws_cost_handler.GetCostList)
+}
+
+func (r *router) Run(port string) {
+	r.e.Run(port)
 }

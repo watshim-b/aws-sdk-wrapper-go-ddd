@@ -1,4 +1,4 @@
-package handler
+package usecase
 
 // AWSのコスト用のハンドラで利用するform
 type AWSCostForm struct {
